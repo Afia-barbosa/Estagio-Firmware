@@ -75,66 +75,6 @@ int posicao_valida(int linha, int coluna){
 	return (tabuleiro[linha][coluna] == '.');
 }
 
-//fazer uma funcao para gerar posicoes 
-void gerar_posi_aleatorias(int quantidade_linha, int quantidade_coluna){
-	//garantindo que os numero sejam mais aleatorios possiveis
-	srand(time(NULL));
-	int i;
-
-	int linha_obs, coluna_obs;
-    int linha_itens, coluna_itens;
-    int linha_inimigos, coluna_inimigos;
-    
-    //quantidade de obstaculo dinamico
-    int quantidade_obstaculo = (quantidade_linha - 2) * (quantidade_coluna - 2) / 30;
-	if(quantidade_obstaculo < 1){ 
-		quantidade_obstaculo = 1;
-	}
-	
-	 // Gerar posição aleatória para o obstaculo
-    for( i = 0; i < quantidade_obstaculo; i++){
-    	do {
-        linha_obs = rand() % (quantidade_linha - 2) + 1;
-        coluna_obs = rand() % (quantidade_coluna - 2) + 1;
-    	} while (!posicao_valida(linha_obs, coluna_obs));
-
-    	setCaracter(tabuleiro, linha_obs, coluna_obs, 'X');
-	}
-
-    //gerar posicao aleatoria para o itens
-    int quantidade_itens = (quantidade_linha - 2) * (quantidade_coluna - 2) / 30;
-	if(quantidade_itens < 1){ 
-		quantidade_itens = 1;
-	}
-
-    // Gerar posição aleatória para o inimigo
-    for( i = 0; i < quantidade_itens; i++){
-    	do {
-        linha_itens = rand() % (quantidade_linha - 2) + 1;
-        coluna_itens = rand() % (quantidade_coluna - 2) + 1;
-    	} while (!posicao_valida(linha_itens, coluna_itens));
-
-    	setCaracter(tabuleiro, linha_itens, coluna_itens, 'I');
-	}
-	
-	//gerar posicao aleatoria para o inimigos
-    int quantidade_inimigos = (quantidade_linha - 2) * (quantidade_coluna - 2) / 30;
-	if(quantidade_inimigos < 1){ 
-		quantidade_inimigos = 1;
-	}
-
-    // Gerar posição aleatória para o inimigo
-    for( i = 0; i < quantidade_inimigos; i++){
-    	do {
-        linha_inimigos = rand() % (quantidade_linha - 2) + 1;
-        coluna_inimigos = rand() % (quantidade_coluna - 2) + 1;
-    	} while (!posicao_valida(linha_inimigos, coluna_inimigos));
-
-    	setCaracter(tabuleiro, linha_inimigos, coluna_inimigos, 'E');
-	}
-	
-	
-}
 
 //setando caractere 
 void setCaracter(char **tabuleiro, int y, int x, char c){

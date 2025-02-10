@@ -11,15 +11,6 @@
 //Vida (inicialmente 100).
 
 
-//estrutura do personagem
-typedef struct Personagem{
-	int y, x;
-	int pontuacao;
-	int vida;
-	
-}personagem;
-
-
 //funcao para limpar a posicao antiga do P
 void limparposicaoPersonagem(char **tabuleiro, int x, int y) {
     tabuleiro[y][x] = ' ';
@@ -29,7 +20,8 @@ void limparposicaoPersonagem(char **tabuleiro, int x, int y) {
 
 void moverPersonagem(char **tabuleiro, int *x, int *y, char tecla, int quantidade_linha, int quantidade_coluna){
 	
-	limparposicaoPersonagem(tabuleiro, *x,*y);
+	int novaPosicaoX = *x;
+	int novaPosicaoY = *y;
 	
 	#ifdef _WIN32 
         system("cls");  // Para Windows
@@ -40,31 +32,40 @@ void moverPersonagem(char **tabuleiro, int *x, int *y, char tecla, int quantidad
     // Movimentação baseada na tecla pressionada
     switch(tecla){
         case 'a':  // Esquerda
-            if (*x > 1) (*x)--;
+            if (novaPosicaoX > 1) novaPosicaoX--;
             break;
         case 'd':  // Direita
-            if (*x < quantidade_coluna - 2) (*x)++;
+            if (novaPosicaoX < quantidade_coluna - 2) novaPosicaoX++;
             break;
         case 'w':  // Cima
-            if (*y > 1) (*y)--; 
+            if (novaPosicaoY > 1) novaPosicaoY--; 
             break;
         case 's':  // Baixo
-            if (*y < quantidade_linha - 2) (*y)++; 
+            if (novaPosicaoY < quantidade_linha - 2) novaPosicaoY++; 
             break;
         default:
             printf("Tecla invalida!\n");
     }
     
-	//funcao para checar caractere 	
-    setCaracter(tabuleiro, *x, *y, 'P');
-    
-    //funcao para checar se tem algum elemento nas posicoes
-    
-    
+	if(posicao_valida(novaPosicaoX, novaPosicaoY)){
+		
+		limparposicaoPersonagem(tabuleiro, *x,*y);
+		
+		*x = novaPosicaoX;
+		*y = novaPosicaoY;
+		
+		setCaracter(tabuleiro, *x, *y, 'P');
+		
+		printf("Personagem movido para: x = %d, y = %d\n", *x, *y);
+	}else{
+		printf("MOvimento bloquado: Obstaculo na posicao desejada.\n");
+	}
 
     // Imprime o tabuleiro atualizado
     printar_tabuleiro(quantidade_linha, quantidade_coluna);
     
-    printf("Teste: Personagem movido para: x = %d, y = %d\n", *x, *y);
 }
+
+
+
 
